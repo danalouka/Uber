@@ -1,10 +1,7 @@
 package com.company;
 
+import org.w3c.dom.html.HTMLImageElement;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 
 public class Graphe {
@@ -19,7 +16,7 @@ public class Graphe {
 
     public void creerGraphe(Scanner sc) {
         String ligneLue = sc.next();
-        String[] valeurs = ligneLue.split(","); // ca lit juste les lignes avec 1 virgule
+        String[] valeurs = ligneLue.split(",");
         if (valeurs.length == 2) {
             creerSommets(valeurs);
         } else if (valeurs.length == 3) {
@@ -72,6 +69,7 @@ public class Graphe {
         }
         origine.setPoidsAvecDepart(0);
         Graphe sousGraphe = new Graphe();
+        origine.getPlusCourtChemin().add(origine);
         LinkedList<Sommet> complementSousGraphe = (LinkedList<Sommet>) listeSommets.clone();
         while (!(sousGraphe.listeSommets.contains(destination))) {
             //u un sommet non dans S et avec L(u) minimal
@@ -87,13 +85,11 @@ public class Graphe {
         System.out.println("La longueur du chemin le plus court en minutes est " + destination.getPoidsAvecDepart());
         System.out.println("Le plus court chemin est le suivant : ");
         LinkedList<Sommet> cheminFinal = destination.getPlusCourtChemin();
-        System.out.print(origine.getValeur()+", ");
         for (Sommet sommet : cheminFinal) {
             System.out.print(sommet.getValeur() + ", ");
-            //recherger!!!!!!
         }
-
-       // System.out.print("Le pourcentage final d’énergie" + (100-));   !!!!!!!!!!!!!!!!!!!!!!!!!!
+        System.out.print("\n");
+        System.out.print("Le pourcentage final d’énergie est " + (100-destination.getPoidsAvecDepart()));
 
     }
 
@@ -111,7 +107,13 @@ public class Graphe {
 //
 //    }
 
-    public void traiterRequetes() {
+    public void traiterRequetes(Scanner sc) {
+
+        //lire requete (classe avec depart, et liste sommets depart et liste sommets dest)
+        Sommet depart = chercherSommet(Integer.parseInt(sc.next()));
+        int tempsDepartConducteur = 0;
+
+
 
 
     }
@@ -126,9 +128,11 @@ public class Graphe {
             if (!(sousGraphe.listeSommets.contains(arc.getSommet()))){
                 if(u.getPoidsAvecDepart() + (arc.getPoids()) < arc.getSommet().getPoidsAvecDepart()){
                     arc.getSommet().setPoidsAvecDepart(arc.getPoids() + u.getPoidsAvecDepart());
-                }    // mise a jour des poids des sommets voisins
-                //LinkedList<Sommet> plusCourtChemin = arc.getSommet().getPlusCourtChemin();       // mise a jour du chemin le plus court
-                ///plusCourtChemin.add(arc.getSommet());
+                    // mise a jour des poids des sommets voisins
+                    LinkedList<Sommet> plusCourtCheminDuU = (LinkedList<Sommet>) u.getPlusCourtChemin().clone();       // mise a jour du chemin le plus court
+                    plusCourtCheminDuU.add(arc.getSommet());
+                    arc.getSommet().setPlusCourtChemin(plusCourtCheminDuU);
+                }
             }
         }
     }

@@ -32,6 +32,7 @@ public class Sommet {
     public boolean estRecharge(){
         return recharge;
     }
+    public void setPlusCourtChemin(LinkedList<Sommet> chemin) { plusCourtChemin = chemin; }
 
 
     public void ajouterArc(Arc arc){

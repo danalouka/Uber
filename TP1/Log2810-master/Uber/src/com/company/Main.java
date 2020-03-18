@@ -24,6 +24,7 @@ public class Main {
             switch (option) {
                 case 'a':              // permet de lire une nouvelle carte afin de créer le graphe correspondant
                 {
+                    graphe.getListeSommets().clear();
                     Scanner sc = new Scanner(new File("/Users/User/Desktop/Uber/TP1/Log2810-master/Uber/arrondissements.txt"));
                     graphe.afficherGraphe(sc);
                     repeter = true;
@@ -42,6 +43,8 @@ public class Main {
                     int destination = Integer.parseInt(scanner.next());
                     Sommet sDepart = graphe.chercherSommet(depart);
                     Sommet sDestination = graphe.chercherSommet(destination);
+                    sDepart.getPlusCourtChemin().clear();
+                    sDestination.getPlusCourtChemin().clear();
                     graphe.plusCourtChemin(sDepart, sDestination);
                     }
                     repeter = true;
@@ -50,6 +53,13 @@ public class Main {
                 }
 
                 case 'c': {
+                    if (graphe.getListeSommets().size()==0){
+                        System.out.println(" \nLe graphe est vide.");
+                    }
+
+                    graphe.getListeSommets().clear();
+                    Scanner sc = new Scanner(new File("/Users/User/Desktop/Uber/TP1/Log2810-master/Uber/requetes.txt"));
+                    graphe.traiterRequetes(sc);
                     repeter = true;
                     break;
                 }
