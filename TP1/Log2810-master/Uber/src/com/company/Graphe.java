@@ -123,11 +123,13 @@ public class Graphe {
 
     public void MiseAJourSommetsVoisins(Sommet u, Graphe sousGraphe) {
         for (Arc arc : u.getArcs()) {
-            //if (!(sousGraphe.listeSommets.contains(u))){
-                arc.getSommet().setPoidsAvecDepart(arc.getPoids() + u.getPoidsAvecDepart());     // mise a jour des poids des sommets voisins
-                LinkedList<Sommet> plusCourtChemin = arc.getSommet().getPlusCourtChemin();       // mise a jour du chemin le plus court
-                plusCourtChemin.add(arc.getSommet());
-            //}
+            if (!(sousGraphe.listeSommets.contains(arc.getSommet()))){
+                if(u.getPoidsAvecDepart() + (arc.getPoids()) < arc.getSommet().getPoidsAvecDepart()){
+                    arc.getSommet().setPoidsAvecDepart(arc.getPoids() + u.getPoidsAvecDepart());
+                }    // mise a jour des poids des sommets voisins
+                //LinkedList<Sommet> plusCourtChemin = arc.getSommet().getPlusCourtChemin();       // mise a jour du chemin le plus court
+                ///plusCourtChemin.add(arc.getSommet());
+            }
         }
     }
 }
