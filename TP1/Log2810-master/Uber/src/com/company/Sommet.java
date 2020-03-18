@@ -17,6 +17,7 @@ public class Sommet {
         this.valeur = valeur;
         this.recharge = recharge;
         this.arcs = new LinkedList<Arc>();
+        this.plusCourtChemin = new LinkedList<Sommet>();
     }
 
     public int getValeur() {
@@ -28,7 +29,7 @@ public class Sommet {
     public LinkedList<Arc> getArcs() {return arcs;}
     public LinkedList<Sommet> getPlusCourtChemin() { return plusCourtChemin; }
     public void setPoidsAvecDepart(int distance) { poidsAvecDepart = distance; }
-    public boolean isRecharge(){
+    public boolean estRecharge(){
         return recharge;
     }
 
