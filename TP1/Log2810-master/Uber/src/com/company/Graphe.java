@@ -7,9 +7,11 @@ import java.util.*;
 public class Graphe {
 
     private LinkedList<Sommet> listeSommets;
+    private LinkedList<Client> listeRequetes;
 
     public Graphe() {
         listeSommets = new LinkedList<Sommet>();
+        listeRequetes = new LinkedList<Client>();
     }
 
     public LinkedList<Sommet> getListeSommets() { return listeSommets; }
@@ -62,7 +64,7 @@ public class Graphe {
         }
     }
 
-    public void plusCourtChemin(Sommet origine, Sommet destination) {
+    public Sommet plusCourtChemin(Sommet origine, Sommet destination) {
 
         for (Sommet sommet : listeSommets) {
             sommet.setPoidsAvecDepart(1000000);
@@ -91,27 +93,61 @@ public class Graphe {
         System.out.print("\n");
         System.out.print("Le pourcentage final d’énergie est " + (100-destination.getPoidsAvecDepart()));
 
+        return destination;
     }
 
-//    public void recharger(Sommet u) {
-//        if (tempsParcouruDesDepart > 85)
-//        {
-//            if (u.estRecharge()){
-//                tempsParcouruDesDepart += 10;
-//                System.out.print("recharge");
-//            }
-//            else {
-//                //idk
-//            }
-//        }
-//
-//    }
+    //retourne le sommet de depart
+    public Sommet lireRequetes(Scanner sc) {
+
+        Sommet depart = chercherSommet(Integer.parseInt(sc.next()));
+
+        while (sc.hasNext()) {
+            String ligneLue = sc.next();
+            String[] valeurs = ligneLue.split(",");
+            Sommet dep = chercherSommet(Integer.parseInt(valeurs[1]));
+            Sommet dest = chercherSommet(Integer.parseInt(valeurs[2]));
+            listeRequetes.add(new Client(Integer.parseInt(valeurs[0]), dep, dest, Integer.parseInt(valeurs[3])));
+        }
+
+        return depart;
+    }
+
+    public Client chercherRequete(int id) {
+        for (Client c : listeRequetes) {
+            if (c.getIdentifiant() == id) {
+                return c;
+            }
+        }
+        return null;
+    }
 
     public void traiterRequetes(Scanner sc) {
 
-        //lire requete (classe avec depart, et liste sommets depart et liste sommets dest)
-        Sommet depart = chercherSommet(Integer.parseInt(sc.next()));
-        int tempsDepartConducteur = 0;
+        Sommet depart = lireRequetes(sc);
+        Conducteur conducteur = new Conducteur(depart);
+        LinkedList<Sommet> cheminDepartRequete = plusCourtChemin(depart,listeRequetes.getFirst().getSommetDepart()).getPlusCourtChemin();
+
+        Sommet sommetCourant = null;
+        for (Sommet s : cheminDepartRequete){
+            for (Client c : listeRequetes){
+                if (c.getSommetDepart().equals(s)){
+                    sommetCourant = c.getSommetDepart();
+                    conducteur.ramasserClient(c);
+                }
+                else {
+                    sommetCourant = listeRequetes.getFirst().getSommetDepart();
+                }
+            }
+        }
+
+        while (listeRequetes.size() != 0){
+            while (conducteur.getCapacite() <= conducteur.CAPACITE_MAX) {
+
+
+
+                sommetCourant = listeRequetes.getFirst().getSommetDepart();
+            }
+        }
 
 
 

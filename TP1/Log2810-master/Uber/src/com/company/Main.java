@@ -57,7 +57,7 @@ public class Main {
                         System.out.println(" \nLe graphe est vide.");
                     }
 
-                    graphe.getListeSommets().clear();
+                   // graphe.getListeSommets().clear();
                     Scanner sc = new Scanner(new File("/Users/User/Desktop/Uber/TP1/Log2810-master/Uber/requetes.txt"));
                     graphe.traiterRequetes(sc);
                     repeter = true;
