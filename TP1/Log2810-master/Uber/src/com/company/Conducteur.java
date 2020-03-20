@@ -54,12 +54,14 @@ public class Conducteur {
 
     // fonction qui ramasse un client
     public void ramasserClient(Client requete) {
+        System.out.print("Client #" + requete.getIdentifiant() + " monte -> ");
         voiture.add(requete);
         capacite++;
     }
 
     // fonction qui depose un client
     public void deposerClient(Client requete) {
+        System.out.print("Client #" + requete.getIdentifiant() + " descend -> ");
         voiture.remove(requete);
         capacite--;
     }

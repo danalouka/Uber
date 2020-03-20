@@ -16,7 +16,7 @@ public class Main {
         boolean repeter = true;;
 
         while (repeter) {
-            System.out.println("\nMenu :");
+            System.out.println("\n\nMenu :");
             System.out.println("\n (a) Mettre à jour la carte. \n (b) Déterminer le plus court chemin sécuritaire.\n (c) Traiter les requêtes.\n (d) Quitter. ");
             Scanner scanner = new Scanner(System.in);
             System.out.println(" \nSVP choisir a, b, c ou d.");
