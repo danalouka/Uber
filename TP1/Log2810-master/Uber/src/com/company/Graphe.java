@@ -91,7 +91,7 @@ public class Graphe {
             System.out.print(sommet.getValeur() + ", ");
         }
         System.out.print("\n");
-        System.out.print("Le pourcentage final d’énergie est " + (100-destination.getPoidsAvecDepart()));
+        System.out.println("Le pourcentage final d’énergie est " + (100-destination.getPoidsAvecDepart()));
 
         return destination;
     }
@@ -125,32 +125,96 @@ public class Graphe {
 
         Sommet depart = lireRequetes(sc);
         Conducteur conducteur = new Conducteur(depart);
+
         LinkedList<Sommet> cheminDepartRequete = plusCourtChemin(depart,listeRequetes.getFirst().getSommetDepart()).getPlusCourtChemin();
 
-        Sommet sommetCourant = null;
-        for (Sommet s : cheminDepartRequete){
-            for (Client c : listeRequetes){
-                if (c.getSommetDepart().equals(s)){
-                    sommetCourant = c.getSommetDepart();
-                    conducteur.ramasserClient(c);
-                }
-                else {
-                    sommetCourant = listeRequetes.getFirst().getSommetDepart();
+        //Sommet sommetCourant = null;
+
+        //on regarde si nous pouvons ramasser quelqu'un sur notre chemin.
+        for (Sommet s : cheminDepartRequete) {
+            for (Client c : listeRequetes) {
+                if (!(c.equals(listeRequetes.getFirst())) && !(c.getSommetDepart().equals(cheminDepartRequete.getLast()))) {
+                    if (c.getSommetDepart().equals(s)) {
+                        if (conducteur.getCapacite() < conducteur.CAPACITE_MAX) {
+                            //we gotta check if restriction here!!!!!!!!!!!!!
+                            //sommetCourant = c.getSommetDepart();              //we stopped to pick up someone on our way
+                            conducteur.ramasserClient(c);
+                        }
+                    }
                 }
             }
         }
 
-        while (listeRequetes.size() != 0){
-            while (conducteur.getCapacite() <= conducteur.CAPACITE_MAX) {
+        Client destinationSauvgarde = null;
+        LinkedList<Sommet> prochainChemin = null;
+
+        while (listeRequetes.size() != 0) {
 
 
+            //on va aller deposer le client prioritaire
+            listeRequetes.getFirst().getSommetDepart().getPlusCourtChemin().clear();
+            prochainChemin = plusCourtChemin(listeRequetes.getFirst().getSommetDepart(), listeRequetes.getFirst().getSommetDestination()).getPlusCourtChemin();
+            prochainChemin.clear();
+            prochainChemin = plusCourtChemin(listeRequetes.getFirst().getSommetDepart(), listeRequetes.getFirst().getSommetDestination()).getPlusCourtChemin();
+            prochainChemin.removeFirst();
 
-                sommetCourant = listeRequetes.getFirst().getSommetDepart();
+            //going to our destinaton to pick who we're supposed to pick up
+            conducteur.ramasserClient(listeRequetes.getFirst());
+            destinationSauvgarde = listeRequetes.getFirst();                    //save req
+            listeRequetes.removeFirst();                                                    //pop the requete
+            //on our way to deposer le prochain client is there a client we can pick up? lets check
+
+
+            for (Sommet s : prochainChemin) {
+                for (Client c : listeRequetes) {
+                    if (c.getSommetDepart().equals(s)) {
+                        if (conducteur.getCapacite() < conducteur.CAPACITE_MAX) {
+                            //we gotta check if restriction here!!!!!!!!!!!!!
+                            //sommetCourant = c.getSommetDepart();              //we stopped to pick up someone on our way
+                            conducteur.ramasserClient(c);
+                        }
+                    }
+                }
             }
+            conducteur.deposerClient(destinationSauvgarde);
+
+            if(conducteur.getVoiture().contains(listeRequetes.getFirst())) {
+                conducteur.deposerClient(destinationSauvgarde);
+            }
+
+            //sommetCourant = listeRequetes.getFirst().getSommetDepart();
+            destinationSauvgarde.getSommetDestination().getPlusCourtChemin().clear();
+            if (!(conducteur.getVoiture().contains(listeRequetes.getFirst()))){
+                prochainChemin = plusCourtChemin(destinationSauvgarde.getSommetDestination(), listeRequetes.getFirst().getSommetDepart()).getPlusCourtChemin();
+            }
+            else {
+                prochainChemin = plusCourtChemin(destinationSauvgarde.getSommetDestination(), listeRequetes.getFirst().getSommetDestination()).getPlusCourtChemin();
+            }
+            prochainChemin.clear();
+            if (!(conducteur.getVoiture().contains(listeRequetes.getFirst()))) {
+                prochainChemin = plusCourtChemin(destinationSauvgarde.getSommetDestination(), listeRequetes.getFirst().getSommetDepart()).getPlusCourtChemin();
+            }
+            else {
+                prochainChemin = plusCourtChemin(destinationSauvgarde.getSommetDestination(), listeRequetes.getFirst().getSommetDestination()).getPlusCourtChemin();
+            }
+            prochainChemin.removeFirst();
+
+
+            for (Sommet s : prochainChemin) {
+                for (Client c : listeRequetes) {
+                    if (!(c.equals(listeRequetes.getFirst())) && !(c.getSommetDepart().equals(cheminDepartRequete.getLast()))) {
+                        if (c.getSommetDepart().equals(s)) {
+                            if (conducteur.getCapacite() < conducteur.CAPACITE_MAX) {
+                                //we gotta check if restriction here!!!!!!!!!!!!!
+                                //sommetCourant = c.getSommetDepart();              //we stopped to pick up someone on our way
+                                conducteur.ramasserClient(c);
+                            }
+                        }
+                    }
+                }
+            }
+
         }
-
-
-
 
     }
 
