@@ -142,6 +142,23 @@ public class Graphe {
         return null;
     }
 
+    public boolean recharger(Conducteur conducteur, int longueurChemin, LinkedList<Sommet> chemin) {
+        boolean aRechergeait = true;
+        if (conducteur.getPourcentageEnergie() - longueurChemin < 15) {
+            aRechergeait = false;
+            for (Sommet s : chemin) {
+                if (s.estRecharge()) {
+                    conducteur.modifierTempsPasse(10);
+                    System.out.print("Recharge -> ");
+                    aRechergeait = true;
+                    break;
+                }
+            }
+
+        }
+        return aRechergeait;
+    }
+
     public void traiterRequetes(Scanner sc) {
 
         Sommet depart = lireRequetes(sc);
@@ -163,7 +180,8 @@ public class Graphe {
             }
         }
 
-        int batterie = 100 - plusCourtCheminSansAffichage(depart, listeRequetes.getFirst().getSommetDepart()).getPoidsAvecDepart();
+        //
+        conducteur.modifierPourcentageEnergie(plusCourtCheminSansAffichage(depart, listeRequetes.getFirst().getSommetDepart()).getPoidsAvecDepart()); //100-longeur
 
         //affichage
         for(Sommet s : cheminDepartRequete) {
@@ -172,6 +190,8 @@ public class Graphe {
 
         Client destinationSauvgarde = null;
         LinkedList<Sommet> prochainChemin = null;
+        int longeurChemin = 0;
+        boolean aRechergeait = true;
 
         while (listeRequetes.size() != 0) {
 
@@ -190,9 +210,15 @@ public class Graphe {
             //on our way to deposer le prochain client is there a client we can pick up? lets check
 
 
-            batterie -= plusCourtCheminSansAffichage(listeRequetes.getFirst().getSommetDepart(), listeRequetes.getFirst().getSommetDestination()).getPoidsAvecDepart();
-            if(batterie < 15) {
-                //rech
+            //
+            if (!listeRequetes.isEmpty())
+                longeurChemin = plusCourtCheminSansAffichage(listeRequetes.getFirst().getSommetDepart(), listeRequetes.getFirst().getSommetDestination()).getPoidsAvecDepart();
+            conducteur.modifierPourcentageEnergie(longeurChemin);
+            conducteur.modifierTempsPasse(longeurChemin);
+            aRechergeait = recharger(conducteur, longeurChemin, prochainChemin);  //moo hon ma7ala! la2no affichage!!!!!
+            if (!aRechergeait) {    //sil na pas pu recharger on his way
+                System.out.print("Pas de station de recharge -> ");
+                aRechergeait = true;
             }
 
 
@@ -230,6 +256,19 @@ public class Graphe {
                 prochainChemin.removeFirst();
 
 
+            //
+            if (!listeRequetes.isEmpty())
+                longeurChemin = plusCourtCheminSansAffichage(listeRequetes.getFirst().getSommetDepart(), listeRequetes.getFirst().getSommetDestination()).getPoidsAvecDepart();
+            conducteur.modifierPourcentageEnergie(longeurChemin);
+            conducteur.modifierTempsPasse(longeurChemin);
+            aRechergeait = recharger(conducteur, longeurChemin, prochainChemin);
+            if (!aRechergeait) {    //sil na pas pu recharger on his way
+
+                System.out.print("Pas de station de recharge -> ");
+            }
+
+
+
             for (Sommet s : prochainChemin) {
                 for (Client c : listeRequetes) {
                     if (!(listeRequetes.isEmpty()) && !(c.equals(listeRequetes.getFirst())) && !(c.getSommetDepart().equals(cheminDepartRequete.getLast()))) {
@@ -245,6 +284,9 @@ public class Graphe {
             }
 
         }
+
+        System.out.println("\nLa longueur du chemin en minute est " + conducteur.getTempsPasse());
+        System.out.print("Le pourcentage final d'énérgie de la voiture est " + conducteur.getPourcentageEnergie());
 
     }
 

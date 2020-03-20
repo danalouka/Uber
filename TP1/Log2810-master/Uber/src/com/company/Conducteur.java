@@ -38,11 +38,11 @@ public class Conducteur {
     }
 
     //les setters
-    public void setTempsPasse(int temps){
-        tempsPasse = temps;
+    public void modifierTempsPasse(int temps){
+        tempsPasse += temps;
     }
-    public void setPourcentageEnergie(int pourcentage){
-        pourcentageEnergie = pourcentage;
+    public void modifierPourcentageEnergie(int pourcentage){
+        pourcentageEnergie -= pourcentage;
     }
     public void setSommetDepart(Sommet sommet){
         sommetDepart = sommet;
