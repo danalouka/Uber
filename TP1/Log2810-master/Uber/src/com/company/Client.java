@@ -1,14 +1,17 @@
 package com.company;
 
+//un Client (peut etre aussi nommé Requete).
 public class Client {
-    private int restrictionTemporelle;
-    private int identifiant;
-    private Sommet sommetDepart;
-    private Sommet sommetDestination;
-    private int tempsPasse;
 
-    //constructeur
-    public Client(int id, Sommet dep, Sommet arriv, int rest){
+    //les attributs
+    private int restrictionTemporelle;     //la restriction temporelle du client
+    private int identifiant;               //l'identifiant du client
+    private Sommet sommetDepart;           //d'ou il faut ramasser le client
+    private Sommet sommetDestination;      //ou il faut deposer le client
+    private int tempsPasse;                //le temps que le client reste dans une voiture d'un conducteur
+
+    //le constructeur
+    public Client(int id, Sommet dep, Sommet arriv, int rest) {
 
         identifiant = id;
         sommetDepart = dep;
@@ -17,6 +20,7 @@ public class Client {
         tempsPasse = 0;
     }
 
+    //les getters
     public int getRestrictionTemporelle(){
         return restrictionTemporelle;
     }
@@ -33,19 +37,12 @@ public class Client {
         return tempsPasse;
     }
 
+    //les setters
     public void setRestrictionTemporelle(int rest){
         restrictionTemporelle = rest;
-    }
-    public void setIdentifiant(int id){
-        identifiant = id;
-    }
-    public void setSommetDepart(Sommet s){
-        sommetDepart = s;
-    }
-    public void setSommetDestination(Sommet s){
-        sommetDestination = s;
     }
     public void setTempsPasse(int temps){
         tempsPasse = temps;
     }
+
 }

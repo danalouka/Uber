@@ -1,19 +1,20 @@
 package com.company;
 
 import java.util.LinkedList;
-import java.util.Scanner;
-
 
 public class Conducteur {
 
+    //capacité maximale de clients qu'un conducteur peut ramasser
     public final int CAPACITE_MAX = 4;
-    private int pourcentageEnergie;
-    private int tempsPasse;
-    private LinkedList<Client> voiture;
-    private int capacite;
-    Sommet sommetDepart;
 
-    //constructeur
+    //les atributs
+    private int pourcentageEnergie;       //le pourcentage d'energie de la voiture du conducteur
+    private int tempsPasse;               //le temps depuis sont depart pour ramasser les clients
+    private LinkedList<Client> voiture;   //la liste des clients dans la voiture
+    private int capacite;                 //nombre de personnes dans la voiture
+    Sommet sommetDepart;                  //le sommet de depart de depart du conducteur
+
+    //le constructeur
     public Conducteur(Sommet depart){
 
         pourcentageEnergie = 100;
@@ -44,13 +45,6 @@ public class Conducteur {
     public void modifierPourcentageEnergie(int pourcentage){
         pourcentageEnergie -= pourcentage;
     }
-    public void setSommetDepart(Sommet sommet){
-        sommetDepart = sommet;
-    }
-
-    public void ajouterRequete(Client requete){
-        voiture.add(requete);
-    }
 
     // fonction qui ramasse un client
     public void ramasserClient(Client requete) {
@@ -64,15 +58,6 @@ public class Conducteur {
         System.out.print("Client #" + requete.getIdentifiant() + " descend -> ");
         voiture.remove(requete);
         capacite--;
-    }
-
-    public Client chercherVoiture(int id) {
-        for (Client c : voiture) {
-            if (c.getIdentifiant() == id) {
-                return c;
-            }
-        }
-        return null;
     }
 
 }

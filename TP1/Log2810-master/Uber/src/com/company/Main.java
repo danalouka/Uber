@@ -1,85 +1,104 @@
 package com.company;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.Scanner;
 
 public class Main {
 
-//    FileReader entree = new FileReader(nomFichier);
-//    BufferedReader tampon = new BufferedReader(entree);
+    public static void choisirMenu(Graphe graphe) throws FileNotFoundException {
 
-    public static void AfficherOptions() throws FileNotFoundException {
-        Graphe graphe = new Graphe();
-        boolean repeter = true;;
+        boolean repeter = true;
 
         while (repeter) {
             System.out.println("\n\nMenu :");
             System.out.println("\n (a) Mettre à jour la carte. \n (b) Déterminer le plus court chemin sécuritaire.\n (c) Traiter les requêtes.\n (d) Quitter. ");
+            System.out.println("\nSVP choisir a, b, c ou d.");
+
             Scanner scanner = new Scanner(System.in);
-            System.out.println(" \nSVP choisir a, b, c ou d.");
+
+            //lit le char donné par l'utilisateur
             char option = scanner.next().charAt(0);
+
+            //choisit l'option.
             switch (option) {
-                case 'a':              // permet de lire une nouvelle carte afin de créer le graphe correspondant
+
+                case 'a': // permet de lire une nouvelle carte afin de créer le graphe correspondant.
                 {
+
                     graphe.getListeSommets().clear();
-                    Scanner sc = new Scanner(new File("/Users/User/Desktop/Uber/TP1/Log2810-master/Uber/arrondissements.txt"));
+                    Scanner sc = new Scanner(new File("./arrondissements.txt"));
                     graphe.afficherGraphe(sc);
                     repeter = true;
                     break;
                 }
-                case 'b':
-                    // permet de déterminer le plus court chemin sécuritaire d’après les points de départ et d’arrivée. Pour ce faire, les paramètres doivent être demandés par la console
+
+                case 'b': // permet de déterminer le plus court chemin sécuritaire d’après les points de départ et d’arrivée. Pour ce faire, les paramètres doivent être demandés par la console
                 {
-                    //il faut s'assurer que le graphe a ete creee!!!!!!!!!!!!!
-                    // Si une nouvelle carte est lue, les options (b) et (c) doivent être réinitialisées!!!!!!!!!!!!!
-                    if (graphe.getListeSommets().size()==0){
-                        System.out.println(" \nLe graphe est vide.");
-                    }
-                    else{
-                    int depart = Integer.parseInt(scanner.next());
-                    int destination = Integer.parseInt(scanner.next());
-                    Sommet sDepart = graphe.chercherSommet(depart);
-                    Sommet sDestination = graphe.chercherSommet(destination);
-                    sDepart.getPlusCourtChemin().clear();
-                    sDestination.getPlusCourtChemin().clear();
-                    graphe.plusCourtChemin(sDepart, sDestination);
-                    }
-                    repeter = true;
 
-                    break;
-                }
+                    if (graphe.getListeSommets().size() == 0) {
+                        System.out.println(" \nLe graphe est vide. Choisir (a) pour mettre à jour la carte.");
+                    }
+                    else {
+                        //lit les inputs de lutilisateur
+                        int depart = Integer.parseInt(scanner.next());
+                        int destination = Integer.parseInt(scanner.next());
+                        Sommet sDepart = graphe.chercherSommet(depart);
+                        Sommet sDestination = graphe.chercherSommet(destination);
 
-                case 'c': {
-                    if (graphe.getListeSommets().size()==0){
-                        System.out.println(" \nLe graphe est vide.");
+                        //reinisialisation
+                        sDepart.getPlusCourtChemin().clear();
+                        sDestination.getPlusCourtChemin().clear();
+
+                        //trouver plus court chemin
+                        graphe.plusCourtChemin(sDepart, sDestination);
                     }
 
-                   // graphe.getListeSommets().clear();
-                    Scanner sc = new Scanner(new File("/Users/User/Desktop/Uber/TP1/Log2810-master/Uber/requetes.txt"));
-                    graphe.traiterRequetes(sc);
                     repeter = true;
                     break;
                 }
 
-                case 'd': {
+                case 'c': //permet de traiter les requêtes reçues
+                {
+
+                    //reinitialisation
+                    for (Sommet s : graphe.getListeSommets()){
+                        s.getPlusCourtChemin().clear();
+                    }
+
+                    if (graphe.getListeSommets().size() == 0) {
+                        System.out.println(" \nLe graphe est vide.");
+                    }
+                    else {
+                        Scanner sc = new Scanner(new File("./requetes.txt"));
+                        graphe.traiterRequetes(sc);
+                    }
+
+                    repeter = true;
+                    break;
+                }
+
+                case 'd': //quitter
+                {
+
                     repeter = false;
                     break;
                 }
-                default: {
+
+                default:
+                {
+
                     System.out.println(" \nMauvais lettre.");
                 }
-
             }
         }
-
     }
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        AfficherOptions();
+        Graphe graphe = new Graphe();
+        choisirMenu(graphe);
 
     }
+
 }
