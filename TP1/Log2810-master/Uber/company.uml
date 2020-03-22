@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.company</OriginalElement>
+  <nodes>
+    <node x="119.13317307692307" y="1390.0">com.company.Graphe</node>
+    <node x="131.1426282051282" y="199.0">com.company.Sommet</node>
+    <node x="165.73189102564103" y="1821.0">com.company.Main</node>
+    <node x="10.5" y="596.0">com.company.Client</node>
+    <node x="135.0" y="961.0">com.company.Conducteur</node>
+    <node x="290.7083333333333" y="0.0">com.company.Arc</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.company.Arc" target="com.company.Sommet">
+      <point x="-13.833333333333314" y="69.5" />
+      <point x="359.875" y="179.0" />
+      <point x="320.5176282051282" y="179.0" />
+      <point x="37.875" y="-168.5" />
+    </edge>
+    <edge source="com.company.Main" target="com.company.Sommet">
+      <point x="-62.0" y="-37.5" />
+      <point x="196.73189102564103" y="1796.0" />
+      <point x="0.0" y="1796.0" />
+      <point x="0.0" y="556.0" />
+      <point x="150.0801282051282" y="556.0" />
+      <point x="-132.5625" y="168.5" />
+    </edge>
+    <edge source="com.company.Conducteur" target="com.company.Client">
+      <point x="-31.0" y="-179.5" />
+      <point x="228.0" y="936.0" />
+      <point x="215.69999999999993" y="936.0" />
+      <point x="91.19999999999993" y="157.5" />
+    </edge>
+    <edge source="com.company.Main" target="com.company.Graphe">
+      <point x="62.0" y="-37.5" />
+      <point x="320.73189102564106" y="1796.0" />
+      <point x="417.6331730769231" y="1796.0" />
+      <point x="99.5" y="190.5" />
+    </edge>
+    <edge source="com.company.Conducteur" target="com.company.Sommet">
+      <point x="93.0" y="-179.5" />
+      <point x="352.0" y="936.0" />
+      <point x="310.70192307692304" y="936.0" />
+      <point x="310.70192307692304" y="566.0" />
+      <point x="301.5801282051282" y="566.0" />
+      <point x="18.9375" y="168.5" />
+    </edge>
+    <edge source="com.company.Graphe" target="com.company.Sommet">
+      <point x="59.69999999999999" y="-190.5" />
+      <point x="377.83317307692306" y="1360.0" />
+      <point x="414.0592948717948" y="1360.0" />
+      <point x="414.0592948717948" y="566.0" />
+      <point x="377.3301282051282" y="566.0" />
+      <point x="94.6875" y="168.5" />
+    </edge>
+    <edge source="com.company.Client" target="com.company.Sommet">
+      <point x="57.0" y="-157.5" />
+      <point x="181.5" y="576.0" />
+      <point x="225.8301282051282" y="576.0" />
+      <point x="-56.8125" y="168.5" />
+    </edge>
+    <edge source="com.company.Graphe" target="com.company.Conducteur">
+      <point x="-19.900000000000034" y="-190.5" />
+      <point x="298.23317307692304" y="1370.0" />
+      <point x="321.0" y="1370.0" />
+      <point x="62.0" y="179.5" />
+    </edge>
+    <edge source="com.company.Graphe" target="com.company.Client">
+      <point x="-139.30000000000007" y="-190.5" />
+      <point x="178.833173076923" y="1360.0" />
+      <point x="83.60192307692307" y="1360.0" />
+      <point x="83.60192307692307" y="936.0" />
+      <point x="78.89999999999998" y="936.0" />
+      <point x="-45.60000000000002" y="157.5" />
+    </edge>
+    <edge source="com.company.Graphe" target="com.company.Arc">
+      <point x="139.3" y="-190.5" />
+      <point x="457.4331730769231" y="1370.0" />
+      <point x="444.9831730769231" y="1370.0" />
+      <point x="444.9831730769231" y="179.0" />
+      <point x="415.2083333333333" y="179.0" />
+      <point x="41.5" y="69.5" />
+    </edge>
+    <edge source="com.company.Sommet" target="com.company.Arc">
+      <point x="-113.625" y="-168.5" />
+      <point x="169.0176282051282" y="159.0" />
+      <point x="304.54166666666663" y="159.0" />
+      <point x="-69.16666666666669" y="69.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.3063016528925623" x="203.18466063344613" y="1021.9125771287619" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

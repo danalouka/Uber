@@ -178,6 +178,7 @@ public class Graphe {
             aRechergeait = false;
             for (Sommet s : chemin) {
                 if (s.estRecharge()) {
+                    // 10 minutes pour recharger la voiture.
                     conducteur.modifierTempsPasse(10);
                     System.out.print("Recharge -> ");
                     aRechergeait = true;
@@ -188,7 +189,7 @@ public class Graphe {
         return aRechergeait;
     }
 
-    //
+    //traite les requetes des clients
     public void traiterRequetes(Scanner sc) {
 
         //construction du conducteur et assignement du premier chemin à partir du sommet de depart
@@ -265,7 +266,7 @@ public class Graphe {
                 System.out.print(s.getValeur()+" -> ");
             }
 
-            //desposer le client
+            //deposer le client
             conducteur.deposerClient(destinationSauvgarde);
 
             //determine le chemin pour aller rammaser le client prioritaire (premier dans la liste des requetes).
